@@ -179,6 +179,41 @@ namespace strange.unittests
 
         }
 
+		[Test]
+		public void TestUnbindParent()
+		{
+			Parent.injectionBinder.Bind<TestModel>().CrossContext();
+
+			Parent.injectionBinder.Unbind<TestModel>();
+
+			Assert.Throws<InjectionException>(delegate() {
+				Parent.injectionBinder.GetInstance<TestModel>();
+			});
+		}
+
+		[Test]
+		public void TestUnbindChild()
+		{
+			ChildOne.injectionBinder.Bind<TestModel>().CrossContext();
+
+			ChildOne.injectionBinder.Unbind<TestModel>();
+
+			Assert.Throws<InjectionException>(delegate() {
+				ChildOne.injectionBinder.GetInstance<TestModel>();
+			});
+		}
+
+		[Test]
+		public void TestUnbindFromOther()
+		{
+			ChildOne.injectionBinder.Bind<TestModel>().CrossContext();
+
+			ChildTwo.injectionBinder.Unbind<TestModel>();
+
+			Assert.Throws<InjectionException>(delegate() {
+				Parent.injectionBinder.GetInstance<TestModel>();
+			});
+		}
 	}
 
 
