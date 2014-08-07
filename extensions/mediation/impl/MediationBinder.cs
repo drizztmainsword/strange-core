@@ -80,7 +80,9 @@ namespace strange.extensions.mediation.impl
 		{
 			MonoBehaviour mono = view as MonoBehaviour;
 			Component[] views = mono.GetComponentsInChildren(typeof(IView), true) as Component[];
-			
+
+			view.registeredWithContext = true;
+
 			int aa = views.Length;
 			for (int a = aa - 1; a > -1; a--)
 			{
